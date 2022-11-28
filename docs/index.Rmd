@@ -1,7 +1,7 @@
 ---
-title: "Your A4 Report Title (TODO: Revise title)"
-author: "Your Name"
-date: '2022-11-01'
+title: "Inequality in Incarceration Trends of the U.S."
+author: "Sukyung Tae"
+date: '2022-11-21'
 output: html_document
 ---
 
@@ -11,35 +11,37 @@ source("../source/analysis.R")
 ```
 
 ## Abstract 
-[TODO: Include a short abstract (about 50 words)]
 
-# Test (TODO: Remove before submission!!)
-```{r echo=FALSE}
-q1_string <- test_query1()
-num <- 5
-```
-As you know, this is a markdown report. The [R Markdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) is **useful!**
-
-* Here's a test of a dynamic variable. Say **"`r q1_string`!!!** 
-* Here's another test. A vector
-of numbers: `r test_query2(num)`.
-
-Recall that _{r echo=TRUE}_ can be used to display the code, 
-which is very useful when developing and debugging a report. Here's an example: 
-
-```{r echo=TRUE}
-num <- 5
-sum <- sum(test_query2(num))
-print(sum)
-```
 
 ## Introduction 
-[TODO]
 
-## Data Summary 
-[TODO]
 
-[TODO ... other sections ... See Canvas for details]
+## Data Summary
+The total jail population in 1970 is **`r jail_population_1970`**. The total jail population in 2018 is **`r jail_population_2018`**. The state with the highest jail population was **`r state_highest_jail_population`**. Also, the state with the lowest jail population was **`r state_lowest_jail_population`**. The change of total jail population from 1970 to 2018 was **`r change_1970_to_2018`**. The black people to white people ratio of general population in the United States in 2018 was **`r black_white_ratio_general_pop_2018`** Also, that of jail population was **`r black_white_ratio_jail_pop_2018`**. Since the ratio of black people to white people is much higher in prison, there is potential of inequality in the prison system.
 
-_All the very best with your work!_
+## Growth of the U.S. Prison Population
 
+``` {r plot population chart, echo = FALSE}
+plot(figure_1)
+```
+
+
+## Growth of Prison Population by State
+
+``` {r plot population by state chart, echo = FALSE}
+plot(figure_2)
+```
+
+
+## General Population and Prison Population by Race
+
+``` {r plot general/jail population by race scatterplot, echo = FALSE}
+plot(figure_3)
+```
+
+
+## Map of Jail Population by State
+
+``` {r plot population by state map, echo = FALSE}
+
+```
