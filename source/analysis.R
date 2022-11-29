@@ -1,51 +1,49 @@
 library(tidyverse)
-library(ggpubr)
-
-# The functions might be useful for A4
 source("../source/a4-helpers.R")
-incarceration <- read.csv('https://raw.githubusercontent.com/vera-institute/incarceration-trends/master/incarceration_trends.csv')
+
+in.df <- read.csv('https://raw.githubusercontent.com/vera-institute/incarceration-trends/master/incarceration_trends.csv')
 
 ## Section 2  ---- 
 #----------------------------------------------------------------------------#
 #
 #----------------------------------------------------------------------------#
-jail_population_1970 <- incarceration %>% filter(year == "1970") %>% 
+jail_population_2018 <- in.df %>% filter(year == "2018") %>% 
   select(year, total_jail_pop) %>% 
-  summarize(n = round(sum(total_jail_pop, na.rm = TRUE))) %>% pull(n)
+  summarize(pop = round(sum(total_jail_pop, na.rm = TRUE))) %>% pull(pop)
 
-jail_population_2018 <- incarceration %>% filter(year == "2018") %>% 
+jail_population_1970 <- in.df %>% filter(year == "1970") %>% 
   select(year, total_jail_pop) %>% 
-  summarize(n = round(sum(total_jail_pop, na.rm = TRUE))) %>% pull(n)
+  summarize(pop = round(sum(total_jail_pop, na.rm = TRUE))) %>% pull(pop)
 
 change_1970_to_2018 <- jail_population_2018 - jail_population_1970
 
-state_highest_jail_population <- incarceration %>%
+state_highest_jail_population <- in.df %>%
   select(state, total_jail_pop) %>% group_by(state) %>%
-  summarize(n = sum(total_jail_pop, na.rm = TRUE)) %>%
-  filter(n == max(n)) %>% pull(state)
+  summarize(pop = sum(total_jail_pop, na.rm = TRUE)) %>%
+  filter(pop == max(pop)) %>% pull(state)
 
-state_lowest_jail_population <- incarceration %>%
+state_lowest_jail_population <- in.df %>%
   select(state, total_jail_pop) %>% group_by(state) %>%
-  summarize(n = sum(total_jail_pop, na.rm = TRUE)) %>%
-  filter(n == min(n)) %>% pull(state)
+  summarize(pop = sum(total_jail_pop, na.rm = TRUE)) %>%
+  filter(pop == min(pop)) %>% pull(state)
 
-white_general_population_2018 <- incarceration %>%
+white_general_population_2018 <- in.df %>%
   select(year, white_pop_15to64) %>% filter(year == "2018") %>% 
-  summarize(n = round(sum(white_pop_15to64, na.rm = TRUE))) %>% pull(n)
+  summarize(pop = round(sum(white_pop_15to64, na.rm = TRUE))) %>% pull(pop)
 
-black_general_population_2018 <- incarceration %>%
+black_general_population_2018 <- in.df %>%
   select(year, black_pop_15to64) %>% filter(year == "2018") %>% 
-  summarize(n = round(sum(black_pop_15to64, na.rm = TRUE))) %>% pull(n)
+  summarize(pop = round(sum(black_pop_15to64, na.rm = TRUE))) %>% pull(pop)
 
 black_white_ratio_general_pop_2018 <- black_general_population_2018 / white_general_population_2018
 
-white_jail_population_2018 <- incarceration %>%
+white_jail_population_2018 <- in.df %>%
   select(year, white_jail_pop) %>% filter(year == "2018") %>% 
-  summarize(n = round(sum(white_jail_pop, na.rm = TRUE))) %>% pull(n)
+  summarize(pop = round(sum(white_jail_pop, na.rm = TRUE))) %>% pull(pop)
 
-black_jail_population_2018 <- incarceration %>%
+black_jail_population_2018 <- in.df %>%
   select(year, black_jail_pop) %>% filter(year == "2018") %>% 
-  summarize(n = round(sum(black_jail_pop, na.rm = TRUE))) %>% pull(n)
+  summarize(pop = round(sum(black_jail_pop, na.rm = TRUE))) %>% pull(pop)
 
 black_white_ratio_jail_pop_2018 <- black_jail_population_2018 / white_jail_population_2018
 
@@ -54,7 +52,7 @@ black_white_ratio_jail_pop_2018 <- black_jail_population_2018 / white_jail_popul
 # Growth of the U.S. Prison Population
 #----------------------------------------------------------------------------#
 get_year_jail_pop <- function() {
-  data <- incarceration %>% select(year, total_jail_pop)
+  data <- in.df %>% select(total_jail_pop, year)
   return(data)
 }
 
@@ -65,7 +63,7 @@ plot_jail_pop_for_us <- function()  {
     labs(title = "Increase of Jail Population in U.S. (1970-2018)", 
          x = "Year", y = "Total Jail Population", 
          caption = "Figure 1. Increase of Jail Population in U.S. (1970-2018).
-         This chart shows that the incrase of jail population in the United States from 1970 to 2018."
+         This chart shows the incrase of jail population in the United States from 1970 to 2018."
     )
   return(chart)
 }
@@ -78,8 +76,8 @@ figure_1
 # Growth of Prison Population by State
 #----------------------------------------------------------------------------#
 get_jail_pop_by_states <- function(states) {
-  data <- incarceration %>% filter(state == states) %>% 
-    select(year, state, total_jail_pop)
+  data <- in.df %>% filter(state == states) %>% 
+    select(total_jail_pop, year, state)
   return(data)
 }
 
@@ -101,8 +99,10 @@ figure_2
 #----------------------------------------------------------------------------#
 # General Population and Prison Population by Race
 #----------------------------------------------------------------------------#
+library(ggpubr)
+
 get_general_jail_pop_by_race <- function() {
-  data <- incarceration %>%
+  data <- in.df %>%
     filter(year == 2018) %>%
     select(white_pop_15to64, black_pop_15to64, white_jail_pop, black_jail_pop) %>%
     mutate(black_white_ratio_general_pop = black_pop_15to64/white_pop_15to64, black_white_ratio_jail_pop = black_jail_pop/white_jail_pop) %>%
@@ -128,5 +128,27 @@ figure_3
 #----------------------------------------------------------------------------#
 # Jail Population by State
 #----------------------------------------------------------------------------#
-state_names <- read.csv("C:/Users/taesr/OneDrive/Desktop/info201/assignments/a4-sukyungtae/source/state_names_and_codes.csv")
-state_names <- state_names %>% select(Code, State)
+st.df <- read.csv("C:/Users/taesr/OneDrive/Desktop/info201/assignments/a4-sukyungtae/source/state_names_and_codes.csv")
+st.df <- st.df %>% select(Code, State)
+
+jail_pop_by_states_2018 <- in.df %>%
+  filter(year == 2018) %>% select(state, total_jail_pop) %>%
+  rename("Code" = state) %>% left_join(st.df) %>%
+  rename("states" = State) %>% mutate(state = tolower(states))
+map <- map_data("state") %>% rename(state = region) %>%
+  left_join(jail_pop_by_states_2018, by = "state")
+
+get_jail_pop_by_states_map <- function() {
+  return(map)
+}
+
+plot_jail_pop_by_states_map <- function() { 
+  data <- get_jail_pop_by_states_map()
+  ggplot(data) + geom_polygon(aes(x = long, y = lat, group = group, fill = total_jail_pop)) +
+    scale_fill_continuous(name = "Jail Population", limits = c(0, 5000)) +
+    labs(title = "Jail Population by State in U.S. (2018)", caption = "Figure 4. Jail Population by State in U.S. (2018).
+         This chart shows that the jail population differs across the country and it is the largest in California.")
+}
+
+figure_4 <- plot_jail_pop_by_states_map()
+figure_4

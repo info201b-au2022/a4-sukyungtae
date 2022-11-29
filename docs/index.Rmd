@@ -11,37 +11,38 @@ source("../source/analysis.R")
 ```
 
 ## Abstract 
-
+The prison system in the United States is one of the most visible manifestations of racism. To delve the deeper inside into this, I will make this research study to show how to employ data analysis and visualization skills to uncover patterns of inequality using Vera Institute incarceration data by using the given data.
 
 ## Introduction 
-
+In the United States, incarceration trends reveal patterns of inequality. To demonstrate these patterns of inequality, I will conduct research on the Vera Institute's incarceration data using data analysis and visualization skills. One obvious disparity revealed by the data is that black people are far more likely than white people to be imprisoned.The people who are incarcerated in the United States are the direct stakeholders impacted by this research. And the people who work in the system could be indirect stakeholders as indirect stakeholders include those who are affected by incarcerated people, such as their families. The primary values in which I must engage are equality and equity. This report could provide answers to questions such as how the jail population has changed over time and how it varies by state. The question of whether the incarceration trend varies by race could also be addressed.
 
 ## Data Summary
 The total jail population in 1970 is **`r jail_population_1970`**. The total jail population in 2018 is **`r jail_population_2018`**. The state with the highest jail population was **`r state_highest_jail_population`**. Also, the state with the lowest jail population was **`r state_lowest_jail_population`**. The change of total jail population from 1970 to 2018 was **`r change_1970_to_2018`**. The black people to white people ratio of general population in the United States in 2018 was **`r black_white_ratio_general_pop_2018`** Also, that of jail population was **`r black_white_ratio_jail_pop_2018`**. Since the ratio of black people to white people is much higher in prison, there is potential of inequality in the prison system.
 
 ## Growth of the U.S. Prison Population
 
-``` {r plot population chart, echo = FALSE}
+``` {r bar chart, echo = FALSE}
 plot(figure_1)
 ```
-
+My question is how the prison population in the United States changed over time. This figure depicts the evolution of the U.S. jail population from 1970 to 2018. The figure shows that it remained consistent throughout the 1970s. It then steadily increased until 2008, when it began to decline.
 
 ## Growth of Prison Population by State
 
-``` {r plot population by state chart, echo = FALSE}
+``` {r line chart, echo = FALSE}
 plot(figure_2)
 ```
-
+My question is how the population in the United States changed over time by states. This figure depicts how the jail population in the U.S. changed from 1970 to 2018 by states. According to the figure, growth trend of the jail population in each state was similar with that of the total jail population of the United States. In fact, California had the largest jail population. However, the growth trend was similar for each state.
 
 ## General Population and Prison Population by Race
 
-``` {r plot general/jail population by race scatterplot, echo = FALSE}
+``` {r scatterplot, echo = FALSE}
 plot(figure_3)
 ```
-
+My question is how general and jail population ratio of black people to white people in the United States in 2018 are different. This figure depicts how the ratio of black people in general population and jail population differs. According to the figure, the ratio of black people is much larger in jail. This reveals potential inequality against black people.
 
 ## Map of Jail Population by State
 
-``` {r plot population by state map, echo = FALSE}
-
+``` {r map, echo = FALSE}
+plot(figure_4)
 ```
+My question is how jail population in the United States in 2018 is different among states. This figure depicts the jail population by state on the United States map. According to the figure, the jail population was the largest in California. This reveals potential inequality against some places.
